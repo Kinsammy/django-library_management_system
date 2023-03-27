@@ -9,11 +9,24 @@ from rest_framework import generics
 
 
 # todo class base view
-class BookCreateApiView(generics.ListAPIView):
+class BookListApiView(generics.ListAPIView, generics.CreateAPIView):
     queryset = Book.objects.select_related('author').all()
     serializer_class = BookSerializer
 
 
+class BookDetailApiView(generics.RetrieveDestroyAPIView):
+    queryset = Book.objects.select_related('author').all()
+    serializer_class = BookSerializer
+
+
+class AuthorListApiView(generics.ListAPIView, generics.CreateAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+
+class AuthorDetailApiView(generics.RetrieveDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 
 #
 # # Create your views here.
@@ -67,5 +80,4 @@ class BookCreateApiView(generics.ListAPIView):
 #         author = Author.objects.get(pk=pk)
 #         serializer = AuthorSerializer(author)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
-
 
