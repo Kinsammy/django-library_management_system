@@ -10,6 +10,8 @@ environ = "*"
 python-dotenv = "*"
 djangorestframework = "*"
 django-debug-toolbar = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

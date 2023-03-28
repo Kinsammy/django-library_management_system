@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .pagination import DefaultPageNumberPaginaton
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
 from book.models import *
 from .serializers import *
 from rest_framework import generics
@@ -14,6 +17,11 @@ class BookListApiView(generics.ListAPIView, generics.CreateAPIView):
     serializer_class = BookSerializer
 
 
+# class CreateBookApiView(generics.CreateAPIView):
+#     queryset = Book.objects.select_related('author').all()
+#     serializer_class = BookSerializer
+
+
 class BookDetailApiView(generics.RetrieveDestroyAPIView):
     queryset = Book.objects.select_related('author').all()
     serializer_class = BookSerializer
@@ -24,16 +32,43 @@ class AuthorListApiView(generics.ListAPIView, generics.CreateAPIView):
     serializer_class = AuthorSerializer
 
 
+# class CreateAuthorApiView(generics.CreateAPIView):
+#     queryset = Author.objects.all()
+#     serializer_class = AuthorSerializer
+
+
 class AuthorDetailApiView(generics.RetrieveDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
+
+# Todo function for hyperlink
+@api_view()
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    serializer = AuthorSerializer(author)
+    return Response(serializer.data)
+
+
+# Todo View Set ---> This will do all the Http Methods such as
+# todo GET, POST, PUT, DELETE
+class AuthorViewSet(ModelViewSet):
+    pagination_class = DefaultPageNumberPaginaton
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+
+class BookViewSet(ModelViewSet):
+    pagination_class = DefaultPageNumberPaginaton
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 #
 # # Create your views here.
 # # class BookListView(generics.ListAPIView):
 # #     queryset = Book.objects.all()
 # #     serializer_class = BookSerializer
-#
+# todo function based view
+# todo function based view is used to overide a certain function
 # @api_view(['GET', 'POST'])
 # def book_List(request):
 #     if request.method == "GET":
@@ -80,4 +115,3 @@ class AuthorDetailApiView(generics.RetrieveDestroyAPIView):
 #         author = Author.objects.get(pk=pk)
 #         serializer = AuthorSerializer(author)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
-
