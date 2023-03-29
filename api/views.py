@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .pagination import DefaultPageNumberPaginaton
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 
 from book.models import *
+from .permission import IsAdminOrReadOnly
 from .serializers import *
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -53,15 +55,25 @@ def author_detail(request, pk):
 # Todo View Set ---> This will do all the Http Methods such as
 # todo GET, POST, PUT, DELETE
 class AuthorViewSet(ModelViewSet):
+    permission_classes = [IsAdminOrReadOnly]
     pagination_class = DefaultPageNumberPaginaton
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 
 class BookViewSet(ModelViewSet):
+
     pagination_class = DefaultPageNumberPaginaton
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+class BookInstanceSet(ModelViewSet):
+    permission_classes = [IsAdminOrReadOnly]
+    pagination_class = DefaultPageNumberPaginaton
+    queryset = BookInstance.objects.all()
+    serializer_class = BookInstanceSerializer
+
 #
 # # Create your views here.
 # # class BookListView(generics.ListAPIView):

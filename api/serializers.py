@@ -42,6 +42,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title', 'isbn', 'description']
 
+
 # # todo is used when you wanted to add something that are not inside your model
 # class AuthorSerializer(serializers.Serializer):
 #     first_name = serializers.CharField(max_length=55)
@@ -52,3 +53,20 @@ class BookDetailSerializer(serializers.ModelSerializer):
 class UserCreate(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
+
+
+class BookInstanceSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = BookInstance
+        fields = ['user_id', 'due_back', 'status', 'book', 'imprint', 'borrower']
+
+    # book = serializers.HyperlinkedRelatedField(
+    #     queryset=BookInstance.objects.all(),
+    #     view_name='book-detail'
+    # )
+    # borrower = serializers.HyperlinkedRelatedField(
+    #     queryset=BookInstance.objects.all(),
+    #     view_name='borrower-detail'
+    # )

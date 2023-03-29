@@ -6,6 +6,7 @@ from rest_framework.routers import SimpleRouter
 router = SimpleRouter()
 router.register('authors', views.AuthorViewSet)
 router.register('books', views.BookViewSet)
+router.register('bookinstance', views.BookInstanceSet)
 
 urlpatterns = [
     # todo Model View set
@@ -18,6 +19,8 @@ urlpatterns = [
 
     # todo author paths
     path('authors/<int:pk>/', views.author_detail, name='author-detail'),
+    path('books/<int:pk>/', views.author_detail, name='book-detail'),
+    path('borrower/<int:pk>/', views.author_detail, name='borrwoer-detail'),
     # path('authors/', views.AuthorListApiView.as_view()),
     # path('authors/create/', views.CreateAuthorApiView.as_view()),
     # path('author/<int:pk>/', views.AuthorDetailApiView.as_view(), name='detail'),
