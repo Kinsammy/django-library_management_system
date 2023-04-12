@@ -55,7 +55,7 @@ def author_detail(request, pk):
 # Todo View Set ---> This will do all the Http Methods such as
 # todo GET, POST, PUT, DELETE
 class AuthorViewSet(ModelViewSet):
-    permission_classes = [IsAdminOrReadOnly]
+    # permission_classes = [IsAdminOrReadOnly]
     pagination_class = DefaultPageNumberPaginaton
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
@@ -69,7 +69,7 @@ class BookViewSet(ModelViewSet):
 
 
 class BookInstanceSet(ModelViewSet):
-    permission_classes = [IsAdminOrReadOnly]
+    # permission_classes = [IsAdminOrReadOnly]
     pagination_class = DefaultPageNumberPaginaton
     queryset = BookInstance.objects.all()
     serializer_class = BookInstanceSerializer

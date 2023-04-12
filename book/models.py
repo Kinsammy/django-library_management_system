@@ -48,6 +48,12 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        # todo -> Ascending order
+        # ordering = ['title']
+        # todo -> Descending order
+        ordering = ['-title']
+
 
 class BookInstance(models.Model):
     # todo Drop down in django
@@ -63,7 +69,7 @@ class BookInstance(models.Model):
     imprint = models.CharField(max_length=55, blank=False, null=False)
     borrower = models.OneToOneField(LibraryUser, on_delete=models.CASCADE, default='')
 
-    # borrower = models.ForeignKey('auth.user', on_delete=models.CASCADE, related_name='borrower')
+
 
     def __str__(self):
         return self.imprint

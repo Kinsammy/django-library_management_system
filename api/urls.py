@@ -1,9 +1,9 @@
 from django.urls import path, include
 from . import views
 
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import SimpleRouter,DefaultRouter
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register('authors', views.AuthorViewSet)
 router.register('books', views.BookViewSet)
 router.register('bookinstance', views.BookInstanceSet)
