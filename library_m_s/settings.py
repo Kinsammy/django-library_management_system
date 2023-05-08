@@ -45,13 +45,15 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'book',
+    'email',
     'api',
+    'book'
 ]
 THIRD_PARTY = [
     'rest_framework',
     'debug_toolbar',
     'djoser',
+    'django_filters',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY
@@ -150,7 +152,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
     # todo #Globally Permision
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
@@ -171,4 +174,19 @@ DJOSER = {
 
 }
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST_USER = 'fanusamuel@gmail.com'
+# EMAIL_HOST_PASSWORD = 'inhbmyvjvbqtyamz'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# # todo-> the email that will
+# DEFAULT_FROM_EMAIL = 'fanusamuel@gmail.com'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 2525
+# todo-> the email that will but it optional
+DEFAULT_FROM_EMAIL = 'fanusamuel@gmail.com'

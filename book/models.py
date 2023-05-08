@@ -69,7 +69,5 @@ class BookInstance(models.Model):
     imprint = models.CharField(max_length=55, blank=False, null=False)
     borrower = models.OneToOneField(LibraryUser, on_delete=models.CASCADE, default='')
 
-
-
     def __str__(self):
         return self.imprint

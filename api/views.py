@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+
 from .pagination import DefaultPageNumberPaginaton
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -11,6 +12,10 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework import generics
+from django.core.mail import send_mail
+
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # todo class base view
@@ -49,6 +54,11 @@ class AuthorDetailApiView(generics.RetrieveDestroyAPIView):
 def author_detail(request, pk):
     author = get_object_or_404(Author, pk=pk)
     serializer = AuthorSerializer(author)
+    # todo -> This is a point where we use the send_mail()
+    message = 'Never give up, keep it up'
+    subject = 'Motivation from Samuel'
+    send_mail(subject, message, 'fanusamuel@gmail.com',
+              ['michaelolamilekanjohn0@gmail.com', 'akinsanyadaniel665@gmail.com'], fail_silently=False)
     return Response(serializer.data)
 
 
@@ -62,10 +72,12 @@ class AuthorViewSet(ModelViewSet):
 
 
 class BookViewSet(ModelViewSet):
-
     pagination_class = DefaultPageNumberPaginaton
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['title', 'genre']
+    search_fields = ['language', 'price']
 
 
 class BookInstanceSet(ModelViewSet):
@@ -88,29 +100,29 @@ class BookInstanceSet(ModelViewSet):
 #         serializer = BookSerializer(queryset, many=True)
 #         return Response(serializer.data)
 #     elif request.method == "POST":
-#         book = BookSerializer(data=request.data)
-#         book.is_valid(raise_exception=True)
-#         book.save()
+#         email = BookSerializer(data=request.data)
+#         email.is_valid(raise_exception=True)
+#         email.save()
 #         return Response("Book saved successfully")
 #
 #
 # @api_view(['GET', 'DELETE', 'PUT', 'PATCH'])
 # def book_detail(request, pk):
 #     # try:
-#     #     book = Book.objects.get(pk=pk)
+#     #     email = Book.objects.get(pk=pk)
 #     # except Book.DoesNotExist:
 #     #     return Response(status=status.HTTP_404_NOT_FOUND)
-#     book = Book.objects.get(pk=pk)
+#     email = Book.objects.get(pk=pk)
 #     if request.method == 'GET':
-#         serializer = BookDetailSerializer(book)
+#         serializer = BookDetailSerializer(email)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
 #
 #     if request.method == 'DELETE':
-#         book.delete()
+#         email.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 #
 #     if request.method == 'PUT':
-#         book = BookSerializer(data=request.data)
+#         email = BookSerializer(data=request.data)
 #
 #
 # @api_view(['GET'])

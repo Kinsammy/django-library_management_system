@@ -60,11 +60,11 @@ class BookInstanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookInstance
-        fields = ['user_id', 'due_back', 'status', 'book', 'imprint', 'borrower']
+        fields = ['user_id', 'due_back', 'status', 'email', 'imprint', 'borrower']
 
-    # book = serializers.HyperlinkedRelatedField(
+    # email = serializers.HyperlinkedRelatedField(
     #     queryset=BookInstance.objects.all(),
-    #     view_name='book-detail'
+    #     view_name='email-detail'
     # )
     # borrower = serializers.HyperlinkedRelatedField(
     #     queryset=BookInstance.objects.all(),
